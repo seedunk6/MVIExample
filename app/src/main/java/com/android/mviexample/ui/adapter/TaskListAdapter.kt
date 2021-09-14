@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.mviexample.R
+import com.android.mviexample.data.model.TaskModel
 import com.android.mviexample.databinding.ItemTaskBinding
 
-class TaskListAdapter(private val images: List<String>) : RecyclerView.Adapter<TaskListAdapter.TaskHolder>() {
+class TaskListAdapter(private var list: List<TaskModel>) : RecyclerView.Adapter<TaskListAdapter.TaskHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -15,15 +16,17 @@ class TaskListAdapter(private val images: List<String>) : RecyclerView.Adapter<T
     }
 
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
-        holder.bind(images[position])
+        holder.bind(list[position])
     }
 
-    override fun getItemCount(): Int = images.size
+    override fun getItemCount(): Int = list.size
 
     class TaskHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemTaskBinding.bind(itemView)
 
-        fun bind(image: String){
+        fun bind(task: TaskModel){
+            binding.tvTitleAndTaskCompleted.text = "${task.title} - ${task.completed}"
+            binding.tvIdAnUserId.text = "${task.id} - ${task.userId}"
         }
     }
 
